@@ -61,3 +61,12 @@ function addRowToTbl(newRow) {
     //clearFormFields();    
 }
 
+function clearFormFields() {
+    document.getElementsByTagName("input").value = '';
+    console.log("clearFormFields() successfully called; result: (see for yourself - are the form feilds empty?");
+}
+
+function deleteRow(this) {
+    this.parentNode.remove(); //???not sure using 'this' will work??
+    console.log("deleteRow() successfully called; result: (see for yourself - is the target row gone?");
+}
