@@ -1,72 +1,63 @@
-let name = '';
-let date = '';
-let amount = '';
-let inputArr = [];
-let createRow = document.createElement(tr); //???may need to do this in a function instead???
-let fieldArr = [];
+function getInput() {
+    let inputArr = [];
+    let name = document.getElementById("name-field").value;
+    let date = document.getElementById("date-field").value;
+    let amount = document.getElementById("amount-field").value;
 
-// Check whether input fields were all filled by user, if so then fill inputArr with the input values
-function fillInputArray() {
-    name = document.getElementById("name-field").value; //try merging these into initial let declarations (after this code passes testing)
-    date = document.getElementById("date-field").value;
-    amount = document.getElementById("amount-field".value);
-
-    if(name != '' && date != '' && amount != '') {
+    if(name != '' && date != '' && amount != 0) {
         inputArr.push(name);
         inputArr.push(date);
-        inputArr.push(amount);
-        return inputArr;
+        inputArr.push(amount); 
+        // test logs
+        console.log(name);
+        console.log(date);
+        console.log(amount);
+        console.log("fillInputArr() successfully called; result: " + inputArr);
+        // end of test logs
+        makeTableFields(inputArr);
     } else {
         alert("Please fill in all 3 fields!")
     }
 }
 
-// create table fields containing the input values from inputArr, & put them into fieldArr
-function makeTableFields() {
+function makeTableFields(inputArr) {
+    let fieldArr = [];
     let i;
     for(i=0; i<inputArr.length; i++) {
         let field = document.createElement("td");
-        let node = document.createTextNode(inputArr[i].value);
+        let node = document.createTextNode(inputArr[i]);
         field.appendChild(node);
         fieldArr.push(field);
     }
-    appendToRow(feildArr);
+    console.log("makeTableFields() successfully called; result: " + fieldArr);
+    appendToRow(fieldArr);
 }
 
 // create new table row; fill it with the fields from fieldArr
-function appendToRow() {
-    row = createRow;
+function appendToRow(fieldArr) {
+    let newRow = document.createElement("tr");
     let i;
     for(i=0; i<fieldArr.length; i++) {
-        row.appendChild(fieldArr[i]);
-        addDeleteButton(row);
+        newRow.appendChild(fieldArr[i]);
+        console.log("appendToRow() successfully called; result: " + newRow);
+        addDeleteButton(newRow);
     }
 }
 
-// create delete btn; append it to row
-function addDeleteButton(row) {
+function addDeleteButton(newRow) {
     const deleteButton = document.createElement("button");
     deleteButton.innerHTML = "x";
     deleteButton.setAttribute("onclick", "deleteRow(this)");  
-    row.appendChild(deleteButton);
-    addRowToTbl(row);
+    newRow.appendChild(deleteButton);
+    console.log("addDeleteButton() successfully called; result: " + newRow);
+    addRowToTbl(newRow);
 }
 
-// append completed new row to table of expenses
-function addRowToTbl() {
+function addRowToTbl(newRow) {
     let tbl = document.getElementById("exp-table");
-    let node = document.createTextNode("row");
+    let node = document.createTextNode(newRow);
     tbl.appendChild(node);
-    clearFormFields();    
-}
-
-// delete a row when its 'x' button is clicked
-function deleteRow(this) {
-    this.parentNode.remove(); //???not sure using 'this' will work??
-}
-
-// clear input fields in form
-function clearFormFields() {
-    document.getElementsByTagName("input").value = '';
+    console.log("addRowToTbl successfully called; result: " + tbl);
+    //clearFormFields();    
 }
 
