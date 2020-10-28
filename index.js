@@ -1,8 +1,14 @@
 // @ts-check
 
-
-
 function addRowToTable() {
+    // get form input values
+    let name = document.getElementById("name-field").value;
+    let date = document.getElementById("date-field").value;
+    let amount = document.getElementById("amount-field").value;
+
+    if(name == '' || date == '' || amount == '') {
+        alert("Please fill in all 3 fields!");
+    } else {
     // gathering data from user input
     let name = document.getElementById("name-field").value;
     let date = document.getElementById("date-field").value;
@@ -15,20 +21,41 @@ function addRowToTable() {
     let nameCell = row.insertCell(-1);
     let dateCell = row.insertCell(-1);
     let amountCell = row.insertCell(-1);
+    
  
     // placing input data & delete btn into cells
     nameCell.innerHTML = name;
     dateCell.innerHTML = date;
     amountCell.innerHTML = amount;
     addDeleteButton(row);
+    clearFormFields();
+    return false;
+    }
 }
 
 function addDeleteButton(row) {
-    const deleteButton = document.createElement("button");
-    deleteButton.innerHTML = "x";
+    let deleteBtnCell = row.insertCell(-1);
+    const deleteButton = document.createElement("input");
+    deleteButton.setAttribute("type", "button");
+    deleteButton.setAttribute("value", "x");
     deleteButton.setAttribute("onclick", "deleteRow(this)");  
-    row.appendChild(deleteButton);
+    deleteBtnCell.appendChild(deleteButton);
+    row.appendChild(deleteBtnCell);
     console.log("addDeleteButton() successfully called; result: " + row);
+}
+
+function clearFormFields() {
+    let formFieldsArr = document.getElementsByClassName("form-control");
+    let i;
+    for(i=0; i < formFieldsArr.length; i++) {
+        formFieldsArr[i].value = "";
+    }
+}
+
+
+function deleteRow(r) {
+    let i = r.parentNode.parentNode.rowIndex;
+    document.getElementById("exp-table").deleteRow(i);
 }
 
 /*function deleteRow(this) {
@@ -38,24 +65,9 @@ function addDeleteButton(row) {
 */
 /*function getInput() {
     let inputArr = [];
-    let name = document.getElementById("name-field").value;
-    let date = document.getElementById("date-field").value;
-    let amount = document.getElementById("amount-field").value;
+    
 
-    if(name == '' && date == '' && amount == '') {
-        alert("Please fill in all 3 fields!");
-    } else {
-        inputArr.push(name);
-        inputArr.push(date);
-        inputArr.push(amount); 
-        // test logs
-        console.log(name);
-        console.log(date);
-        console.log(amount);
-        console.log("getInput() successfully called; result: " + inputArr);
-        // end of test logs
-        makeTableFields(inputArr);
-    }
+    
 }
 
 function makeTableFields(inputArr) {
@@ -92,10 +104,6 @@ function addRowToTbl(newRow) {
     //clearFormFields();    
 }
 
-//function clearFormFields() {
- //   document.getElementsByTagName("input")
-//    console.log("clearFormFields() successfully called; result: (see for yourself - are the form feilds empty?");
-//}
 
 
 */
